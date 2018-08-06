@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { eventBus } from '../main';
+
 export default {
   data() {
     return {
@@ -22,6 +24,10 @@ export default {
       }
       this.action = this.$store.getters.gameStarted ? 'Stop Game' : 'Start Game';
       this.buttonClass = this.$store.getters.gameStarted ? ({ 'btn-danger': true }) : ({ 'btn-success': true });
+      setInterval(() => {
+        console.log('Emited');
+        eventBus.$emit('swim');
+      }, 300);
     },
   },
 };

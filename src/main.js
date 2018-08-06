@@ -4,8 +4,9 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
+// eslint-disable-next-line
+export const eventBus = new Vue({});
 
-const eventBus = new Vue({});
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

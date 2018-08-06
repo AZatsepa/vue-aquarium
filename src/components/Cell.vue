@@ -1,16 +1,24 @@
 <template lang="html">
   <div class="foo">
-    {{ inhabitant().coords.x }}
+    {{ coordX }}
   </div>
 </template>
 
 <script>
+import { eventBus } from '../main';
+
 export default {
   props: ['inhabitant'],
   computed: {
-    name() {
-      return this.inhabitant().name;
+    coordX() {
+      return this.inhabitant().coords.x;
     },
+  },
+  created() {
+    eventBus.$on('swim', () => {
+      console.log(this.inhabitant().coords.x);
+      this.inhabitant().swim();
+    });
   },
 };
 </script>
