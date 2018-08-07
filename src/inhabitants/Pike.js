@@ -4,11 +4,11 @@ export default class Pike extends Fish {
   constructor() {
     super();
     this.name = 'pike';
-    this.weight = 5;
+    this.weight = 1;
   }
 
   changeWeight() {
-    this.weight -= 0.5;
+    this.weight -= 0.1;
   }
 
   eatCrucian(value) {
