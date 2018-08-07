@@ -3,15 +3,15 @@ import Fish from './Fish';
 export default class Pike extends Fish {
   constructor() {
     super();
-    this.name = 'P';
-    this.weight = 3;
+    this.name = 'pike';
+    this.weight = 5;
   }
 
-  decrementWeight() {
+  changeWeight() {
     this.weight -= 0.5;
   }
 
-  eatCrucian() {
-    this.weight += 1;
+  eatCrucian(value) {
+    this.weight += value;
   }
 }

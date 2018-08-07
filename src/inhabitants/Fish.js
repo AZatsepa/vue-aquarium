@@ -56,5 +56,7 @@ export default class Fish {
       y: Fish.getNewCoord(this.coords.y, 'y'),
     };
     this.stepCount += 1;
+    this.age += 1;
+    this.changeWeight();
   }
 }

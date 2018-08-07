@@ -3,19 +3,25 @@
     <div class="row">
       <div class="col-6">
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Pikes</label>
+          <label class="col-sm-3 col-form-label">
+            <img src="../assets/pike.png" alt="" width="50" height="50" id="pike">
+          </label>
           <div class="col-sm-3">
             <input type="number" class="form-control" v-model="pikesNumber" @change="changePikesNumber">
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Crucians</label>
+          <label class="col-sm-3 col-form-label">
+            <img src="../assets/crucian.png" alt="" width="50" height="50" id="crucian">
+          </label>
           <div class="col-sm-3">
             <input type="number" class="form-control" v-model="cruciansNumber" @change="changeCruciansNumber">
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3 col-form-label">Seaweeds</label>
+          <label class="col-sm-3 col-form-label">
+            <img src="../assets/seaweed.png" alt="" width="50" height="50" id="seaweed">
+          </label>
           <div class="col-sm-3">
             <input type="number" class="form-control" v-model="seaweedsNumber" @change="changeSeaweedsNumber">
           </div>
@@ -35,9 +41,9 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-5 col-form-label">Set Timeout</label>
+          <label class="col-sm-5 col-form-label">Set Interval</label>
           <div class="col-sm-3">
-            <input type="number" class="form-control" @change="changeTimeout($event)" value="0.5">
+            <input type="number" class="form-control" @change="changeStepsInterval($event)" value="500">
           </div>
         </div>
       </div>
@@ -49,9 +55,9 @@
 export default {
   data() {
     return {
-      pikesNumber: 5,
-      cruciansNumber: 5,
-      seaweedsNumber: 5,
+      pikesNumber: this.$store.getters.pikesNumber,
+      cruciansNumber: this.$store.getters.cruciansNumber,
+      seaweedsNumber: this.$store.getters.seaweedsNumber,
     };
   },
   methods: {
@@ -70,8 +76,8 @@ export default {
     changeAquariumWidth(event) {
       this.$store.commit('changeAquariumWidth', +event.target.value);
     },
-    changeTimeout(event) {
-      this.$store.commit('changeTimeout', +event.target.value);
+    changeStepsInterval(event) {
+      this.$store.commit('changeStepsInterval', +event.target.value);
     },
   },
 };
