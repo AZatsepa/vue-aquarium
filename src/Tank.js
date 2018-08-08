@@ -4,10 +4,9 @@ import Crucian from './inhabitants/Crucian';
 import Seaweed from './inhabitants/Seaweed';
 
 export default class Tank {
-  constructor(doc) {
-    const canvass = doc.getElementById('canvas');
-    this.canvas = canvass;
-    this.context = canvass.getContext('2d');
+  constructor() {
+    this.canvas = document.getElementById('canvas');
+    this.context = this.canvas.getContext('2d');
     this.cellSize = 30;
     this.map = [];
   }
@@ -23,6 +22,10 @@ export default class Tank {
 
     for (let i = 0; i < Store.getters.seaweedsNumber; i += 1) {
       this.map.push(new Seaweed());
+    }
+
+    for (let i = 0; i < this.map.length; i += 1) {
+      this.DrawElem(this.map[i]);
     }
   }
 
@@ -92,21 +95,23 @@ export default class Tank {
     });
   }
 
-  run = setInterval(() => {
-    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.reproduction();
-    this.map.forEach((item) => {
-      this.DrawElem(item);
-      switch (item.name) {
-        case 'crucian':
-          this.crucianStep(item);
-          break;
-        case 'pike':
-          this.pikeStep(item);
-          break;
-        default:
-      }
-    });
-    this.map.push(new Seaweed());
-  }, Store.getters.interval);
+  run() {
+    return setInterval(() => {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.reproduction();
+      this.map.forEach((item) => {
+        this.DrawElem(item);
+        switch (item.name) {
+          case 'crucian':
+            this.crucianStep(item);
+            break;
+          case 'pike':
+            this.pikeStep(item);
+            break;
+          default:
+        }
+      });
+      // this.map.push(new Seaweed());
+    }, Store.getters.interval);
+  }
 }
