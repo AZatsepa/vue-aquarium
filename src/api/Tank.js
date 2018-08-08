@@ -29,7 +29,7 @@ export default class Tank {
   }
 
   DrawInhabitant(x, y, type) {
-    const img = document.getElementById(type);
+    const img = document.getElementById(`${type}2`);
     this.context.drawImage(img, x, y, Store.getters.cellSize, Store.getters.cellSize);
   }
 
@@ -158,5 +158,8 @@ export default class Tank {
     this.map = [];
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.drawText('Game Over!');
+    setTimeout(() => {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }, 300);
   }
 }
