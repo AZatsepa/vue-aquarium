@@ -6,22 +6,24 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     gameStarted: false,
-    pikesNumber: 1,
+    pikesNumber: 0,
     cruciansNumber: 1,
     seaweedsNumber: 0,
     aquariumHeight: 10,
     aquariumWidth: 10,
-    interval: 500,
+    cellSize: 50,
+    interval: 100,
     bar: 10,
   },
   getters: {
+    gameStarted: state => state.gameStarted,
     aquariumHeight: state => state.aquariumHeight,
     cruciansNumber: state => state.cruciansNumber,
     pikesNumber: state => state.pikesNumber,
     seaweedsNumber: state => state.seaweedsNumber,
     aquariumWidth: state => state.aquariumWidth,
     tankHeight: state => state.tankHeight,
-    gameStarted: state => state.gameStarted,
+    cellSize: state => state.cellSize,
     interval: state => state.interval,
   },
   mutations: {

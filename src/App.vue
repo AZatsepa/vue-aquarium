@@ -3,7 +3,10 @@
     <div class="col-10">
       <app-header></app-header>
       <app-tank></app-tank>
-      <app-control></app-control>
+      <hr>
+      <app-settings></app-settings>
+      <hr>
+      <app-buttons></app-buttons>
     </div>
   </div>
 </template>
@@ -11,14 +14,16 @@
 <script>
 import Header from './components/Header';
 import Tank from './components/Tank';
-import Control from './components/Control';
+import Settings from './components/Settings';
+import Buttons from './components/Buttons';
 
 export default {
   name: 'App',
   components: {
     appHeader: Header,
     appTank: Tank,
-    appControl: Control,
+    appSettings: Settings,
+    appButtons: Buttons,
   },
 };
 </script>

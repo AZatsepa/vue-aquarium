@@ -1,5 +1,5 @@
 
-import CoordsGenerator from '../CoordsGenerator';
+import Coordinator from '../Coordinator';
 
 export default class Fish {
   static generateGender() {
@@ -12,13 +12,13 @@ export default class Fish {
     this.weight = 1;
     this.stepCount = 0;
     this.gender = Fish.generateGender();
-    this.coords = CoordsGenerator.generateCoords();
+    this.coords = Coordinator.generateCoords();
   }
 
   swim() {
     const coords = {
-      x: CoordsGenerator.getNewCoord(this.coords.x, 'x'),
-      y: CoordsGenerator.getNewCoord(this.coords.y, 'y'),
+      x: Coordinator.getNewCoord(this.coords.x, 'x'),
+      y: Coordinator.getNewCoord(this.coords.y, 'y'),
     };
     this.coords = coords;
     this.stepCount += 1;
