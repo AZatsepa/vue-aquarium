@@ -75,7 +75,9 @@ export default class Tank {
              elem.stepCount >= 3 &&
               item.stepCount >= 3 &&
                elem.gender !== item.gender &&
-                oneCell(elem, item));
+                !elem.reproduced &&
+                 !item.reproduced &&
+                  oneCell(elem, item));
   }
 
   reproduction() {
@@ -85,8 +87,10 @@ export default class Tank {
           return this.canBeReproduced(elem, item);
         });
         if (canReproduce && item.name === 'crucian') {
+          item.disableReproducing();
           this.map.push(new Crucian(item.coords));
         } else if (canReproduce && item.name === 'pike') {
+          item.disableReproducing();
           this.map.push(new Pike(item.coords));
         }
       }

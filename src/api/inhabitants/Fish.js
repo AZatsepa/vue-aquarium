@@ -10,6 +10,7 @@ export default class Fish {
 
   constructor(coords) {
     this.weight = 1;
+    this.reproduced = false;
     this.stepCount = 0;
     this.gender = Fish.generateGender();
     if (coords) {
@@ -26,7 +27,12 @@ export default class Fish {
     };
     this.coords = coords;
     this.stepCount += 1;
+    this.reproduced = false;
     this.changeWeight();
+  }
+
+  disableReproducing() {
+    this.reproduced = true;
   }
 
   eat(food) {
