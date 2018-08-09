@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="row justify-content-center">
-    <button class="btn" :class="buttonClass" @click="play">{{ text }}</button>
+    <button class="btn" :class="buttonClass" @click="play" :disabled="!$store.getters.settingsValid">{{ text }}</button>
   </div>
 </template>
 

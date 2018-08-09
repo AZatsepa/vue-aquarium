@@ -14,6 +14,7 @@ export default new Vuex.Store({
     cellSize: 50,
     interval: 300,
     bar: 10,
+    settingsValid: true,
   },
   getters: {
     gameStarted: state => state.gameStarted,
@@ -25,6 +26,7 @@ export default new Vuex.Store({
     tankHeight: state => state.tankHeight,
     cellSize: state => state.cellSize,
     interval: state => state.interval,
+    settingsValid: state => state.settingsValid,
   },
   mutations: {
     changePikesNumber(state, n) {
@@ -50,6 +52,12 @@ export default new Vuex.Store({
     },
     stopGame(state) {
       state.gameStarted = false;
+    },
+    invalidSettings(state) {
+      state.settingsValid = false;
+    },
+    validSettings(state) {
+      state.settingsValid = true;
     },
   },
 });

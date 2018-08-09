@@ -7,27 +7,36 @@
           <div class="col-sm-3">
             <input type="number"
                    class="form-control"
-                   v-model="pikesNumber"
-                   @input="handlePikesInput">
+                   :class="{ 'is-invalid': $v.pikesNumber.$error }"
+                   v-model.number="pikesNumber"
+                   @blur="setPikesNumber">
           </div>
+          <small class="text-danger" v-if="!$v.pikesNumber.numeric">Pikes quantity should be a number</small>
+          <small class="text-danger" v-if="!$v.pikesNumber.required">Pikes quantity should be present</small>
         </div>
         <div class="form-group row">
           <img src="../assets/img/crucian.png" alt="" width="50" height="50" id="crucian">
           <div class="col-sm-3">
             <input type="number"
                    class="form-control"
-                   v-model="cruciansNumber"
-                   @input="handleCruciansInput">
+                   :class="{ 'is-invalid': $v.cruciansNumber.$error }"
+                   v-model.number="cruciansNumber"
+                   @blur="setCruciansNumber">
           </div>
+          <small class="text-danger" v-if="!$v.cruciansNumber.numeric">Crucians quantity should be a number</small>
+          <small class="text-danger" v-if="!$v.cruciansNumber.required">Crucians quantity should be present</small>
         </div>
         <div class="form-group row">
           <img src="../assets/img/seaweed.png" alt="" width="50" height="50" id="seaweed">
           <div class="col-sm-3">
             <input type="number"
                    class="form-control"
+                   :class="{ 'is-invalid': $v.seaweedsNumber.$error }"
                    v-model="seaweedsNumber"
-                   @input="handleSeaweedsInput">
+                   @blur="setSeaweedsNumber">
           </div>
+          <small class="text-danger" v-if="!$v.seaweedsNumber.numeric">Seaweeds quantity should be a number</small>
+          <small class="text-danger" v-if="!$v.seaweedsNumber.required">Seaweeds quantity should be present</small>
         </div>
       </div>
       <div class="col-6">
@@ -36,27 +45,50 @@
           <div class="col-sm-5">
             <input type="number"
                    class="form-control"
-                   :value="aquariumHeight"
-                   @input="handleAquariumHeightInput">
+                   :class="{ 'is-invalid': $v.aquariumHeight.$error }"
+                   v-model.number="aquariumHeight"
+                   @blur="setAquariumHeight">
           </div>
+          <small class="text-danger"
+                 v-if="!$v.aquariumHeight.numeric">Height should be a number</small>
+          <small class="text-danger"
+                 v-if="!$v.aquariumHeight.minVal">
+            Height should be {{ $v.aquariumHeight.$params.minVal }} cells min
+          </small>
+          <small class="text-danger"
+                 v-if="!$v.aquariumHeight.maxVal">
+            Height should be {{ $v.aquariumHeight.$params.maxVal }} cells max
+          </small>
         </div>
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Aquarium width (20 cells max)</label>
           <div class="col-sm-5">
             <input type="number"
                    class="form-control"
-                   :value="aquariumWidth"
-                   @input="handleAquariumWidthInput">
+                   :class="{ 'is-invalid': $v.aquariumWidth.$error }"
+                   v-model.number="aquariumWidth"
+                   @blur="setAquariumWidth">
           </div>
+          <small class="text-danger"
+                 v-if="!$v.aquariumWidth.numeric">Width should be a number</small>
+          <small class="text-danger"
+                 v-if="!$v.aquariumWidth.minVal">Width should be {{ $v.aquariumWidth.$params.minVal }} cells min</small>
+          <small class="text-danger"
+                 v-if="!$v.aquariumWidth.maxVal">Width should be {{ $v.aquariumWidth.$params.maxVal }} cells max</small>
         </div>
         <div class="form-group row">
           <label class="col-sm-5 col-form-label">Set Interval (ms)</label>
           <div class="col-sm-5">
             <input type="number"
                    class="form-control"
-                   :value="interval"
-                   @input="handleIntervalInput">
+                   :class="{ 'is-invalid': $v.interval.$error }"
+                   v-model.number="interval"
+                   @blur="setInterval">
           </div>
+          <small class="text-danger"
+                 v-if="!$v.interval.minVal">Interval should be {{ $v.interval.$params.minVal }}ms min</small>
+          <small class="text-danger"
+                 v-if="!$v.interval.maxVal">Interval should be {{ $v.interval.$params.maxVal }}ms max</small>
         </div>
       </div>
     </div>
@@ -64,82 +96,82 @@
 </template>
 
 <script>
+import { required, numeric, minValue, maxValue } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
-      pikesNumber: this.$store.getters.pikesNumber,
-      cruciansNumber: this.$store.getters.cruciansNumber,
-      seaweedsNumber: this.$store.getters.seaweedsNumber,
-      aquariumHeight: this.$store.getters.aquariumHeight,
-      aquariumWidth: this.$store.getters.aquariumWidth,
-      interval: this.$store.getters.interval,
+      pikesNumber: 3,
+      cruciansNumber: 3,
+      seaweedsNumber: 0,
+      aquariumHeight: 10,
+      aquariumWidth: 10,
+      interval: 300,
     };
   },
+  validations: {
+    pikesNumber: {
+      numeric,
+      required,
+      maxVal: maxValue(10),
+      minVal: minValue(0),
+    },
+    cruciansNumber: {
+      numeric,
+      required,
+      maxVal: maxValue(10),
+      minVal: minValue(1),
+    },
+    seaweedsNumber: {
+      numeric,
+      required,
+      maxVal: maxValue(15),
+    },
+    aquariumHeight: {
+      numeric,
+      minVal: minValue(4),
+      maxVal: maxValue(20),
+    },
+    aquariumWidth: {
+      numeric,
+      minVal: minValue(4),
+      maxVal: maxValue(20),
+    },
+    interval: {
+      minVal: minValue(50),
+      maxVal: maxValue(5000),
+    },
+  },
   methods: {
-    handlePikesInput(event) {
-      const value = Number(event.target.value);
-      if (value < 0 || Number.isNaN(value)) {
-        this.pikesNumber = 0;
-        this.$store.commit('changePikesNumber', 0);
-      } else {
-        this.pikesNumber = value;
-        this.$store.commit('changePikesNumber', value);
-      }
+    setPikesNumber() {
+      this.$v.pikesNumber.$touch();
+      this.checkSettings();
     },
-    handleCruciansInput(event) {
-      const value = Number(event.target.value);
-      if (value < 0 || Number.isNaN(value)) {
-        this.cruciansNumber = 0;
-        this.$store.commit('changeCruciansNumber', 0);
-      } else {
-        this.cruciansNumber = value;
-        this.$store.commit('changeCruciansNumber', value);
-      }
+    setCruciansNumber() {
+      this.$v.cruciansNumber.$touch();
+      this.checkSettings();
     },
-    handleSeaweedsInput(event) {
-      const value = Number(event.target.value);
-      if (value < 0 || Number.isNaN(value)) {
-        this.seaweedsNumber = 0;
-        this.$store.commit('changeSeaweedsNumber', 0);
-      } else {
-        this.seaweedsNumber = value;
-        this.$store.commit('changeSeaweedsNumber', value);
-      }
+    setSeaweedsNumber() {
+      this.$v.seaweedsNumber.$touch();
+      this.checkSettings();
     },
-    handleAquariumHeightInput(event) {
-      const value = Number(event.target.value);
-      if (value < 4 || Number.isNaN(value)) {
-        this.aquariumHeight = 4;
-        this.$store.commit('changeAquariumHeight', 4);
-      } else if (value > 20) {
-        this.aquariumHeight = 20;
-        this.$store.commit('changeAquariumHeight', 20);
-      } else {
-        this.aquariumHeight = value;
-        this.$store.commit('changeAquariumHeight', value);
-      }
+    setAquariumHeight() {
+      this.$v.aquariumHeight.$touch();
+      this.checkSettings();
     },
-    handleAquariumWidthInput(event) {
-      const value = Number(event.target.value);
-      if (value < 4 || Number.isNaN(value)) {
-        this.aquariumWidth = 4;
-        this.$store.commit('changeAquariumWidth', 4);
-      } else if (value > 20) {
-        this.aquariumWidth = 20;
-        this.$store.commit('changeAquariumWidth', 20);
-      } else {
-        this.aquariumWidth = value;
-        this.$store.commit('changeAquariumWidth', value);
-      }
+    setAquariumWidth() {
+      this.$v.aquariumWidth.$touch();
+      this.checkSettings();
     },
-    handleIntervalInput(event) {
-      const value = Number(event.target.value);
-      if (value < 100 || Number.isNaN(value)) {
-        this.interval = 100;
-        this.$store.commit('changeStepsInterval', 100);
+    setInterval() {
+      this.$v.interval.$touch();
+      this.checkSettings();
+    },
+    checkSettings() {
+      if (this.$v.$invalid) {
+        this.$store.commit('invalidSettings');
       } else {
-        this.interval = value;
-        this.$store.commit('changeStepsInterval', value);
+        this.$store.commit('validSettings');
       }
     },
   },
