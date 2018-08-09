@@ -32,7 +32,7 @@
             <input type="number"
                    class="form-control"
                    :class="{ 'is-invalid': $v.seaweedsNumber.$error }"
-                   v-model="seaweedsNumber"
+                   v-model.number="seaweedsNumber"
                    @blur="setSeaweedsNumber">
           </div>
           <small class="text-danger" v-if="!$v.seaweedsNumber.numeric">Seaweeds quantity should be a number</small>
@@ -92,6 +92,7 @@
         </div>
       </div>
     </div>
+    <hr>
   </div>
 </template>
 
@@ -99,15 +100,55 @@
 import { required, numeric, minValue, maxValue } from 'vuelidate/lib/validators';
 
 export default {
-  data() {
-    return {
-      pikesNumber: 3,
-      cruciansNumber: 3,
-      seaweedsNumber: 0,
-      aquariumHeight: 10,
-      aquariumWidth: 10,
-      interval: 300,
-    };
+  computed: {
+    pikesNumber: {
+      get() {
+        return this.$store.state.pikesNumber;
+      },
+      set(value) {
+        this.$store.commit('changePikesNumber', value);
+      },
+    },
+    cruciansNumber: {
+      get() {
+        return this.$store.state.cruciansNumber;
+      },
+      set(value) {
+        this.$store.commit('changeCruciansNumber', value);
+      },
+    },
+    seaweedsNumber: {
+      get() {
+        return this.$store.state.seaweedsNumber;
+      },
+      set(value) {
+        this.$store.commit('changeSeaweedsNumber', value);
+      },
+    },
+    aquariumHeight: {
+      get() {
+        return this.$store.state.aquariumHeight;
+      },
+      set(value) {
+        this.$store.commit('changeAquariumHeight', value);
+      },
+    },
+    aquariumWidth: {
+      get() {
+        return this.$store.state.aquariumWidth;
+      },
+      set(value) {
+        this.$store.commit('changeAquariumWidth', value);
+      },
+    },
+    interval: {
+      get() {
+        return this.$store.state.interval;
+      },
+      set(value) {
+        this.$store.commit('changeStepsInterval', value);
+      },
+    },
   },
   validations: {
     pikesNumber: {

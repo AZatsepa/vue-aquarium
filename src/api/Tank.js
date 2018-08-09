@@ -3,6 +3,8 @@ import Pike from './inhabitants/Pike';
 import Crucian from './inhabitants/Crucian';
 import Seaweed from './inhabitants/Seaweed';
 
+const oneCell = (elem1, elem2) => elem1.coords.x === elem2.coords.x && elem1.coords.y === elem2.coords.y;
+
 export default class Tank {
   constructor() {
     this.canvas = document.getElementById('canvas');
@@ -11,15 +13,15 @@ export default class Tank {
   }
 
   fillTank() {
-    for (let i = 0; i < Store.getters.pikesNumber; i += 1) {
+    for (let i = 0; i < Store.state.pikesNumber; i += 1) {
       this.map.push(new Pike());
     }
 
-    for (let i = 0; i < Store.getters.cruciansNumber; i += 1) {
+    for (let i = 0; i < Store.state.cruciansNumber; i += 1) {
       this.map.push(new Crucian());
     }
 
-    for (let i = 0; i < Store.getters.seaweedsNumber; i += 1) {
+    for (let i = 0; i < Store.state.seaweedsNumber; i += 1) {
       this.map.push(new Seaweed());
     }
 
@@ -30,12 +32,12 @@ export default class Tank {
 
   DrawInhabitant(x, y, type) {
     const img = document.getElementById(`${type}2`);
-    this.context.drawImage(img, x, y, Store.getters.cellSize, Store.getters.cellSize);
+    this.context.drawImage(img, x, y, Store.state.cellSize, Store.state.cellSize);
   }
 
   DrawElem(elem) {
-    const xCoord = (elem.coords.x - 1) * Store.getters.cellSize;
-    const yCoord = ((Store.getters.aquariumHeight - elem.coords.y) * Store.getters.cellSize);
+    const xCoord = (elem.coords.x - 1) * Store.state.cellSize;
+    const yCoord = ((Store.state.aquariumHeight - elem.coords.y) * Store.state.cellSize);
     this.DrawInhabitant(xCoord, yCoord, elem.name);
   }
 
@@ -46,9 +48,7 @@ export default class Tank {
 
   crucianStep(crucian) {
     this.map.forEach((elem) => {
-      if ((elem.name === 'seaweed' &&
-            elem.coords.x === crucian.coords.x &&
-              elem.coords.y === crucian.coords.y)) {
+      if ((elem.name === 'seaweed' && oneCell(crucian, elem))) {
         crucian.eat(elem);
         this.removeElem(elem);
       }
@@ -58,9 +58,7 @@ export default class Tank {
 
   pikeStep(pike) {
     const crucian = this.map.find((elem) => { // eslint-disable-line arrow-body-style
-      return (elem.name === 'crucian' &&
-              elem.coords.x === pike.coords.x &&
-              elem.coords.y === pike.coords.y);
+      return (elem.name === 'crucian' && oneCell(pike, elem));
     });
     if (crucian) {
       pike.eat(crucian);
@@ -77,8 +75,7 @@ export default class Tank {
              elem.stepCount >= 3 &&
               item.stepCount >= 3 &&
                elem.gender !== item.gender &&
-                elem.coords.x === item.coords.x &&
-                 elem.coords.y === item.coords.y);
+                oneCell(elem, item));
   }
 
   reproduction() {
@@ -106,17 +103,17 @@ export default class Tank {
 
   drawGrid() {
     // Draw vertical lines
-    for (let i = 0; i < (Store.getters.aquariumWidth + 1) * Store.getters.cellSize; i += Store.getters.cellSize) {
+    for (let i = 0; i < (Store.state.aquariumWidth + 1) * Store.state.cellSize; i += Store.state.cellSize) {
       this.context.beginPath();
       this.context.moveTo(i, 0);
-      this.context.lineTo(i, (Store.getters.aquariumHeight + 1) * Store.getters.cellSize);
+      this.context.lineTo(i, (Store.state.aquariumHeight + 1) * Store.state.cellSize);
       this.context.stroke();
     }
     // Draw horizontal lines
-    for (let i = 0; i < (Store.getters.aquariumHeight + 1) * Store.getters.cellSize; i += Store.getters.cellSize) {
+    for (let i = 0; i < (Store.state.aquariumHeight + 1) * Store.state.cellSize; i += Store.state.cellSize) {
       this.context.beginPath();
       this.context.moveTo(0, i);
-      this.context.lineTo((Store.getters.aquariumWidth + 1) * Store.getters.cellSize, i);
+      this.context.lineTo((Store.state.aquariumWidth + 1) * Store.state.cellSize, i);
       this.context.stroke();
     }
   }
@@ -142,7 +139,7 @@ export default class Tank {
         this.stop();
         Store.commit('stopGame');
       }
-    }, Store.getters.interval);
+    }, Store.state.interval);
   }
 
   drawText(text) {

@@ -8,10 +8,10 @@
 export default {
   computed: {
     tankHeight() {
-      return `${this.$store.getters.aquariumHeight * this.$store.getters.cellSize}px`;
+      return `${this.$store.state.aquariumHeight * this.$store.state.cellSize}px`;
     },
     tankWidth() {
-      return `${this.$store.getters.aquariumWidth * this.$store.getters.cellSize}px`;
+      return `${this.$store.state.aquariumWidth * this.$store.state.cellSize}px`;
     },
   },
 };

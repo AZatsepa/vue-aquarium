@@ -3,10 +3,10 @@ import Store from '../store';
 export default class Coordinator {
   static getNewCoord(value, direction) {
     let values = [];
-    let maxValue = Store.getters.aquariumWidth;
+    let maxValue = Store.state.aquariumWidth;
 
     if (direction === 'y') {
-      maxValue = Store.getters.aquariumHeight;
+      maxValue = Store.state.aquariumHeight;
     }
 
     if (value === maxValue) {
@@ -25,8 +25,8 @@ export default class Coordinator {
   }
 
   static generateCoords() {
-    const randomXCoord = Math.floor(Math.random() * (Store.getters.aquariumWidth + 1));
-    const randomYCoord = Math.floor(Math.random() * (Store.getters.aquariumHeight + 1));
+    const randomXCoord = Math.floor(Math.random() * (Store.state.aquariumWidth + 1));
+    const randomYCoord = Math.floor(Math.random() * (Store.state.aquariumHeight + 1));
     const coords = {
       x: randomXCoord,
       y: randomYCoord,

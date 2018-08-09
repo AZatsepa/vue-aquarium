@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="row justify-content-center">
-    <button class="btn" :class="buttonClass" @click="play" :disabled="!$store.getters.settingsValid">{{ text }}</button>
+    <button class="btn" :class="buttonClass" @click="play" :disabled="!$store.state.settingsValid">{{ text }}</button>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     play() {
-      if (!this.$store.getters.gameStarted) {
+      if (!this.$store.state.gameStarted) {
         this.$store.commit('startGame');
         this.tank.fillTank();
         this.tank.run();
@@ -28,10 +28,10 @@ export default {
   },
   computed: {
     text() {
-      return this.$store.getters.gameStarted ? 'Stop Game' : 'Start Game';
+      return this.$store.state.gameStarted ? 'Stop Game' : 'Start Game';
     },
     buttonClass() {
-      return this.$store.getters.gameStarted ? ({ 'btn-danger': true }) : ({ 'btn-success': true });
+      return this.$store.state.gameStarted ? ({ 'btn-danger': true }) : ({ 'btn-success': true });
     },
   },
   mounted() {

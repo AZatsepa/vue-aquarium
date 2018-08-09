@@ -13,20 +13,7 @@ export default new Vuex.Store({
     aquariumWidth: 10,
     cellSize: 50,
     interval: 300,
-    bar: 10,
     settingsValid: true,
-  },
-  getters: {
-    gameStarted: state => state.gameStarted,
-    aquariumHeight: state => state.aquariumHeight,
-    cruciansNumber: state => state.cruciansNumber,
-    pikesNumber: state => state.pikesNumber,
-    seaweedsNumber: state => state.seaweedsNumber,
-    aquariumWidth: state => state.aquariumWidth,
-    tankHeight: state => state.tankHeight,
-    cellSize: state => state.cellSize,
-    interval: state => state.interval,
-    settingsValid: state => state.settingsValid,
   },
   mutations: {
     changePikesNumber(state, n) {

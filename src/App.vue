@@ -2,11 +2,11 @@
   <div id="app" class="row justify-content-center">
     <div class="col-10">
       <app-header></app-header>
+      <hr>
       <app-tank></app-tank>
       <hr>
       <transition name="fade">
-        <app-settings v-if="!$store.getters.gameStarted"></app-settings>
-        <hr v-if="!$store.getters.gameStarted">
+        <app-settings v-if="!$store.state.gameStarted"></app-settings>
       </transition>
       <app-buttons></app-buttons>
       <div class="d-none">
