@@ -8,11 +8,15 @@ export default class Fish {
     return theGender[randomNumber];
   }
 
-  constructor() {
+  constructor(coords) {
     this.weight = 1;
     this.stepCount = 0;
     this.gender = Fish.generateGender();
-    this.coords = Coordinator.generateCoords();
+    if (coords) {
+      this.coords = Object.assign({}, coords);
+    } else {
+      this.coords = Coordinator.generateCoords();
+    }
   }
 
   swim() {

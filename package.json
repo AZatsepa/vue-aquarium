@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --open --inline --progress --config build/webpack.dev.conf.js",
+    "heroku-prebuild": "NODE_ENV=production yarn run build",
     "build": "NODE_ENV=production webpack --progress --hide-modules --config build/webpack.prod.conf.js",
     "start": "node server.js"
   },

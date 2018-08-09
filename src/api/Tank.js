@@ -85,9 +85,9 @@ export default class Tank {
           return this.canBeReproduced(elem, item);
         });
         if (canReproduce && item.name === 'crucian') {
-          this.map.push(new Crucian());
+          this.map.push(new Crucian(item.coords));
         } else if (canReproduce && item.name === 'pike') {
-          this.map.push(new Pike());
+          this.map.push(new Pike(item.coords));
         }
       }
     });
