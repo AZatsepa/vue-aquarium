@@ -6,13 +6,11 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --open --inline --progress --config build/webpack.dev.conf.js",
-    "start": "yarn run dev",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test": "yarn run unit",
-    "lint": "eslint --ext .js,.vue src test/unit",
-    "build": "node build/build.js"
+    "build": "NODE_ENV=production webpack --progress --hide-modules --config build/webpack.prod.conf.js",
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.16.3",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
